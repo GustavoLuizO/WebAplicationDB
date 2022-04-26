@@ -8,44 +8,29 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-dark">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Nome
-            </th>
-            <th>
-                Preco
-            </th>
-            <th>
-                Fabricante
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Preco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fabricante.FabricanteID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProdutoID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProdutoID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProdutoID">Delete</a>
-            </td>
-        </tr>
+
+@foreach (var item in Model)
+{
+    <div class="card card-header m-1 p-1">
+        <div class="bg-transparent p-1">
+            <h4>@item.Nome
+                <span class="badge badge-pill badge-primary" style="float:right">
+                    <small>@item.Preco</small>
+                </span>
+                <span class="rounded-circle">
+                    <small>
+                        <a asp-action="Edit" class="btn btn-dark" asp-route-id=@item.ProdutoID>Editar</a> |
+                        <a asp-action="Details" class="btn btn-dark" asp-route-id=@item.ProdutoID>Detalhes</a> |
+                        <a asp-action="Delete" class="btn btn-dark" asp-route-id=@item.ProdutoID>Excluir</a> |
+                    </small>
+                </span>
+            </h4>
+        </div>
+        <div class="card-text p-1">@item.Fabricante.Nome</div>
+    </div>
+    <div class="pagination">
+        @Html.PagedListPager(Model, pagina => Url.Action("Index", new {pagina}))
+    </div>
 }
-    </tbody>
-</table>
-<div class="row">
-    @Html.PagedListPager(Model, pagina=> Url.Action("Index",new {pagina}))
-</div>
